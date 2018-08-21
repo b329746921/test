@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.demo.mapper.TGroupMapper">
+  <resultMap id="BaseResultMap" type="cn.bdqn.demo.pojo.TGroup">
+    <constructor>
+      <idArg column="GR_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="GR_CODE" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="GR_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="GR_LICENSE" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="GR_PASSWORD" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    GR_ID, GR_CODE, GR_NAME, GR_LICENSE, GR_PASSWORD
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_group
+    where GR_ID = #{grId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_group
+    where GR_ID = #{grId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.bdqn.demo.pojo.TGroup">
+    insert into t_group (GR_ID, GR_CODE, GR_NAME, 
+      GR_LICENSE, GR_PASSWORD)
+    values (#{grId,jdbcType=BIGINT}, #{grCode,jdbcType=CHAR}, #{grName,jdbcType=VARCHAR}, 
+      #{grLicense,jdbcType=VARCHAR}, #{grPassword,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.bdqn.demo.pojo.TGroup">
+    insert into t_group
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="grId != null">
+        GR_ID,
+      </if>
+      <if test="grCode != null">
+        GR_CODE,
+      </if>
+      <if test="grName != null">
+        GR_NAME,
+      </if>
+      <if test="grLicense != null">
+        GR_LICENSE,
+      </if>
+      <if test="grPassword != null">
+        GR_PASSWORD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="grId != null">
+        #{grId,jdbcType=BIGINT},
+      </if>
+      <if test="grCode != null">
+        #{grCode,jdbcType=CHAR},
+      </if>
+      <if test="grName != null">
+        #{grName,jdbcType=VARCHAR},
+      </if>
+      <if test="grLicense != null">
+        #{grLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="grPassword != null">
+        #{grPassword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.demo.pojo.TGroup">
+    update t_group
+    <set>
+      <if test="grCode != null">
+        GR_CODE = #{grCode,jdbcType=CHAR},
+      </if>
+      <if test="grName != null">
+        GR_NAME = #{grName,jdbcType=VARCHAR},
+      </if>
+      <if test="grLicense != null">
+        GR_LICENSE = #{grLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="grPassword != null">
+        GR_PASSWORD = #{grPassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where GR_ID = #{grId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.bdqn.demo.pojo.TGroup">
+    update t_group
+    set GR_CODE = #{grCode,jdbcType=CHAR},
+      GR_NAME = #{grName,jdbcType=VARCHAR},
+      GR_LICENSE = #{grLicense,jdbcType=VARCHAR},
+      GR_PASSWORD = #{grPassword,jdbcType=VARCHAR}
+    where GR_ID = #{grId,jdbcType=BIGINT}
+  </update>
+</mapper>

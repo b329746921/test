@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.demo.mapper.TPersonRelationMapper">
+  <resultMap id="BaseResultMap" type="cn.bdqn.demo.pojo.TPersonRelation">
+    <constructor>
+      <idArg column="RE_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="PE_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="GR_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="RE_PACTNO" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="RE_PACTDATE" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="RE_DEPT" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="RE_JOB" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="RE_DELETEDATE" javaType="java.util.Date" jdbcType="DATE" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    RE_ID, PE_ID, GR_ID, RE_PACTNO, RE_PACTDATE, RE_DEPT, RE_JOB, RE_DELETEDATE
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_person_relation
+    where RE_ID = #{reId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_person_relation
+    where RE_ID = #{reId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.bdqn.demo.pojo.TPersonRelation">
+    insert into t_person_relation (RE_ID, PE_ID, GR_ID, 
+      RE_PACTNO, RE_PACTDATE, RE_DEPT, 
+      RE_JOB, RE_DELETEDATE)
+    values (#{reId,jdbcType=BIGINT}, #{peId,jdbcType=BIGINT}, #{grId,jdbcType=BIGINT}, 
+      #{rePactno,jdbcType=VARCHAR}, #{rePactdate,jdbcType=DATE}, #{reDept,jdbcType=VARCHAR}, 
+      #{reJob,jdbcType=INTEGER}, #{reDeletedate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.bdqn.demo.pojo.TPersonRelation">
+    insert into t_person_relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="reId != null">
+        RE_ID,
+      </if>
+      <if test="peId != null">
+        PE_ID,
+      </if>
+      <if test="grId != null">
+        GR_ID,
+      </if>
+      <if test="rePactno != null">
+        RE_PACTNO,
+      </if>
+      <if test="rePactdate != null">
+        RE_PACTDATE,
+      </if>
+      <if test="reDept != null">
+        RE_DEPT,
+      </if>
+      <if test="reJob != null">
+        RE_JOB,
+      </if>
+      <if test="reDeletedate != null">
+        RE_DELETEDATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="reId != null">
+        #{reId,jdbcType=BIGINT},
+      </if>
+      <if test="peId != null">
+        #{peId,jdbcType=BIGINT},
+      </if>
+      <if test="grId != null">
+        #{grId,jdbcType=BIGINT},
+      </if>
+      <if test="rePactno != null">
+        #{rePactno,jdbcType=VARCHAR},
+      </if>
+      <if test="rePactdate != null">
+        #{rePactdate,jdbcType=DATE},
+      </if>
+      <if test="reDept != null">
+        #{reDept,jdbcType=VARCHAR},
+      </if>
+      <if test="reJob != null">
+        #{reJob,jdbcType=INTEGER},
+      </if>
+      <if test="reDeletedate != null">
+        #{reDeletedate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.demo.pojo.TPersonRelation">
+    update t_person_relation
+    <set>
+      <if test="peId != null">
+        PE_ID = #{peId,jdbcType=BIGINT},
+      </if>
+      <if test="grId != null">
+        GR_ID = #{grId,jdbcType=BIGINT},
+      </if>
+      <if test="rePactno != null">
+        RE_PACTNO = #{rePactno,jdbcType=VARCHAR},
+      </if>
+      <if test="rePactdate != null">
+        RE_PACTDATE = #{rePactdate,jdbcType=DATE},
+      </if>
+      <if test="reDept != null">
+        RE_DEPT = #{reDept,jdbcType=VARCHAR},
+      </if>
+      <if test="reJob != null">
+        RE_JOB = #{reJob,jdbcType=INTEGER},
+      </if>
+      <if test="reDeletedate != null">
+        RE_DELETEDATE = #{reDeletedate,jdbcType=DATE},
+      </if>
+    </set>
+    where RE_ID = #{reId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.bdqn.demo.pojo.TPersonRelation">
+    update t_person_relation
+    set PE_ID = #{peId,jdbcType=BIGINT},
+      GR_ID = #{grId,jdbcType=BIGINT},
+      RE_PACTNO = #{rePactno,jdbcType=VARCHAR},
+      RE_PACTDATE = #{rePactdate,jdbcType=DATE},
+      RE_DEPT = #{reDept,jdbcType=VARCHAR},
+      RE_JOB = #{reJob,jdbcType=INTEGER},
+      RE_DELETEDATE = #{reDeletedate,jdbcType=DATE}
+    where RE_ID = #{reId,jdbcType=BIGINT}
+  </update>
+</mapper>

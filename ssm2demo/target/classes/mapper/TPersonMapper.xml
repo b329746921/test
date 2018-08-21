@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.bdqn.demo.mapper.TPersonMapper">
+  <resultMap id="BaseResultMap" type="cn.bdqn.demo.pojo.TPerson">
+    <constructor>
+      <idArg column="PE_ID" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="PE_NAME" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="PE_SEX" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="PE_BIRTHDAY" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="PE_SCHOOL" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="PE_PROFESSIONAL" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="PE_RECORD" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="PE_FINISH_SCHOOL" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="PE_CARDID" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="PE_TECHNICAL" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="PE_ASSESS_DATE" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="PE_ADDRESS" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="PE_TEL" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="PE_SPECIALITY" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    PE_ID, PE_NAME, PE_SEX, PE_BIRTHDAY, PE_SCHOOL, PE_PROFESSIONAL, PE_RECORD, PE_FINISH_SCHOOL, 
+    PE_CARDID, PE_TECHNICAL, PE_ASSESS_DATE, PE_ADDRESS, PE_TEL, PE_SPECIALITY
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_person
+    where PE_ID = #{peId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_person
+    where PE_ID = #{peId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.bdqn.demo.pojo.TPerson">
+    insert into t_person (PE_ID, PE_NAME, PE_SEX, 
+      PE_BIRTHDAY, PE_SCHOOL, PE_PROFESSIONAL, 
+      PE_RECORD, PE_FINISH_SCHOOL, PE_CARDID, 
+      PE_TECHNICAL, PE_ASSESS_DATE, PE_ADDRESS, 
+      PE_TEL, PE_SPECIALITY)
+    values (#{peId,jdbcType=BIGINT}, #{peName,jdbcType=VARCHAR}, #{peSex,jdbcType=CHAR}, 
+      #{peBirthday,jdbcType=DATE}, #{peSchool,jdbcType=VARCHAR}, #{peProfessional,jdbcType=INTEGER}, 
+      #{peRecord,jdbcType=INTEGER}, #{peFinishSchool,jdbcType=DATE}, #{peCardid,jdbcType=VARCHAR}, 
+      #{peTechnical,jdbcType=INTEGER}, #{peAssessDate,jdbcType=DATE}, #{peAddress,jdbcType=VARCHAR}, 
+      #{peTel,jdbcType=VARCHAR}, #{peSpeciality,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.bdqn.demo.pojo.TPerson">
+    insert into t_person
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="peId != null">
+        PE_ID,
+      </if>
+      <if test="peName != null">
+        PE_NAME,
+      </if>
+      <if test="peSex != null">
+        PE_SEX,
+      </if>
+      <if test="peBirthday != null">
+        PE_BIRTHDAY,
+      </if>
+      <if test="peSchool != null">
+        PE_SCHOOL,
+      </if>
+      <if test="peProfessional != null">
+        PE_PROFESSIONAL,
+      </if>
+      <if test="peRecord != null">
+        PE_RECORD,
+      </if>
+      <if test="peFinishSchool != null">
+        PE_FINISH_SCHOOL,
+      </if>
+      <if test="peCardid != null">
+        PE_CARDID,
+      </if>
+      <if test="peTechnical != null">
+        PE_TECHNICAL,
+      </if>
+      <if test="peAssessDate != null">
+        PE_ASSESS_DATE,
+      </if>
+      <if test="peAddress != null">
+        PE_ADDRESS,
+      </if>
+      <if test="peTel != null">
+        PE_TEL,
+      </if>
+      <if test="peSpeciality != null">
+        PE_SPECIALITY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="peId != null">
+        #{peId,jdbcType=BIGINT},
+      </if>
+      <if test="peName != null">
+        #{peName,jdbcType=VARCHAR},
+      </if>
+      <if test="peSex != null">
+        #{peSex,jdbcType=CHAR},
+      </if>
+      <if test="peBirthday != null">
+        #{peBirthday,jdbcType=DATE},
+      </if>
+      <if test="peSchool != null">
+        #{peSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="peProfessional != null">
+        #{peProfessional,jdbcType=INTEGER},
+      </if>
+      <if test="peRecord != null">
+        #{peRecord,jdbcType=INTEGER},
+      </if>
+      <if test="peFinishSchool != null">
+        #{peFinishSchool,jdbcType=DATE},
+      </if>
+      <if test="peCardid != null">
+        #{peCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="peTechnical != null">
+        #{peTechnical,jdbcType=INTEGER},
+      </if>
+      <if test="peAssessDate != null">
+        #{peAssessDate,jdbcType=DATE},
+      </if>
+      <if test="peAddress != null">
+        #{peAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="peTel != null">
+        #{peTel,jdbcType=VARCHAR},
+      </if>
+      <if test="peSpeciality != null">
+        #{peSpeciality,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.bdqn.demo.pojo.TPerson">
+    update t_person
+    <set>
+      <if test="peName != null">
+        PE_NAME = #{peName,jdbcType=VARCHAR},
+      </if>
+      <if test="peSex != null">
+        PE_SEX = #{peSex,jdbcType=CHAR},
+      </if>
+      <if test="peBirthday != null">
+        PE_BIRTHDAY = #{peBirthday,jdbcType=DATE},
+      </if>
+      <if test="peSchool != null">
+        PE_SCHOOL = #{peSchool,jdbcType=VARCHAR},
+      </if>
+      <if test="peProfessional != null">
+        PE_PROFESSIONAL = #{peProfessional,jdbcType=INTEGER},
+      </if>
+      <if test="peRecord != null">
+        PE_RECORD = #{peRecord,jdbcType=INTEGER},
+      </if>
+      <if test="peFinishSchool != null">
+        PE_FINISH_SCHOOL = #{peFinishSchool,jdbcType=DATE},
+      </if>
+      <if test="peCardid != null">
+        PE_CARDID = #{peCardid,jdbcType=VARCHAR},
+      </if>
+      <if test="peTechnical != null">
+        PE_TECHNICAL = #{peTechnical,jdbcType=INTEGER},
+      </if>
+      <if test="peAssessDate != null">
+        PE_ASSESS_DATE = #{peAssessDate,jdbcType=DATE},
+      </if>
+      <if test="peAddress != null">
+        PE_ADDRESS = #{peAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="peTel != null">
+        PE_TEL = #{peTel,jdbcType=VARCHAR},
+      </if>
+      <if test="peSpeciality != null">
+        PE_SPECIALITY = #{peSpeciality,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PE_ID = #{peId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.bdqn.demo.pojo.TPerson">
+    update t_person
+    set PE_NAME = #{peName,jdbcType=VARCHAR},
+      PE_SEX = #{peSex,jdbcType=CHAR},
+      PE_BIRTHDAY = #{peBirthday,jdbcType=DATE},
+      PE_SCHOOL = #{peSchool,jdbcType=VARCHAR},
+      PE_PROFESSIONAL = #{peProfessional,jdbcType=INTEGER},
+      PE_RECORD = #{peRecord,jdbcType=INTEGER},
+      PE_FINISH_SCHOOL = #{peFinishSchool,jdbcType=DATE},
+      PE_CARDID = #{peCardid,jdbcType=VARCHAR},
+      PE_TECHNICAL = #{peTechnical,jdbcType=INTEGER},
+      PE_ASSESS_DATE = #{peAssessDate,jdbcType=DATE},
+      PE_ADDRESS = #{peAddress,jdbcType=VARCHAR},
+      PE_TEL = #{peTel,jdbcType=VARCHAR},
+      PE_SPECIALITY = #{peSpeciality,jdbcType=VARCHAR}
+    where PE_ID = #{peId,jdbcType=BIGINT}
+  </update>
+</mapper>
