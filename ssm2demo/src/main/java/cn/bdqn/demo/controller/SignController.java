@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 /**
  *
  **/
-@Controller
+@RestController
 public class SignController {
 
     @Resource
@@ -22,6 +22,7 @@ public class SignController {
      */
     @RequestMapping("/signin")
     public void companySignin(){
+        System.out.println(1);
         companySignService.companySignin();
     }
 
