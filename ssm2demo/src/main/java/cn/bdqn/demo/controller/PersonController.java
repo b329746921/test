@@ -2,9 +2,11 @@ package cn.bdqn.demo.controller;
 
 import cn.bdqn.demo.common.CommonResp;
 import cn.bdqn.demo.pojo.TPerson;
+import cn.bdqn.demo.pojo.TPersonVo;
 import cn.bdqn.demo.service.PersonService;
 import com.github.pagehelper.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,5 +31,10 @@ public class PersonController {
             pageSize = 20;
         }
         return personService.getPersonPage(pageNo, pageSize);
+    }
+
+    @RequestMapping(value = "/addPerson", method = RequestMethod.POST)
+    public CommonResp addPerson(TPersonVo tPerson, /*解决提交表单erorr*/BindingResult bindingResult){
+        return CommonResp.getSuccessResp(Boolean.TRUE);
     }
 }

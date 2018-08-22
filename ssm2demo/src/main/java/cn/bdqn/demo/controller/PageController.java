@@ -49,4 +49,11 @@ public class PageController {
         return "person_list";
     }
 
+    /**
+     * 跳转到添加人员页面
+     */
+    @RequestMapping(value = "/addPerson", method = RequestMethod.GET)
+    public String toAddPerson(){
+        return "add_person";
+    }
 }

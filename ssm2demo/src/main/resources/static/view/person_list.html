@@ -66,6 +66,12 @@
                 }
             )
         }
+
+        function toAddPerson() {
+            $(location).attr('href', 'addPerson');
+            return false
+        }
+
         $(function () {
             getPersonList(1, 10)
 
@@ -76,7 +82,7 @@
 <form action="" style="margin:0px;display:inline;">
     人员搜索： 姓名<input type="text" name="peName"/> 身份证号<input type="text" name="peCardid"> <input type="submit" value="搜索">
 </form>
-<input type="submit" id="addPerson" value="新增人员">
+<input type="submit" id="addPerson" onclick="toAddPerson()" value="新增人员">
 <table id="personList">
 
 </table>

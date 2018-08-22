@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加人员</title>
+    <script src="/util/jquery.js"></script>
+    <script>
+        function add_person_submit() {
+            $.post(
+                "addPerson",
+                $('#addPersonForm').serialize(),
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("服务异常，异常代码：" + result.code + " 异常信息：" + result.msg);
+                    } else {
+                        $(location).attr('href', 'personList');
+                    }
+                }
+            )
+        }
+
+        $(function () {
+            $.post(
+                "getData ",
+                {code : "PE_PROFESSIONAL"},
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("服务异常，异常代码：" + result.code + " 异常信息：" + result.msg);
+                    } else {
+                        var data = result.data;
+                        for(var i in data){
+                            var dataId = data[i].dataId;
+                            var dataName = data[i].dataName;
+                            $("#PE_PROFESSIONAL").append("<option value='+ dataId +'>" + dataName + "</option>")
+                        }
+                    }
+                }
+            )
+
+            $.post(
+                "getData ",
+                {code : "PE_RECORD"},
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("服务异常，异常代码：" + result.code + " 异常信息：" + result.msg);
+                    } else {
+                        var data = result.data;
+                        for(var i in data){
+                            var dataId = data[i].dataId;
+                            var dataName = data[i].dataName;
+                            $("#PE_RECORD").append("<option value='+ dataId +'>" + dataName + "</option>")
+                        }
+                    }
+                }
+            )
+
+            $.post(
+                "getData ",
+                {code : "PE_TECHNICAL"},
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("服务异常，异常代码：" + result.code + " 异常信息：" + result.msg);
+                    } else {
+                        var data = result.data;
+                        for(var i in data){
+                            var dataId = data[i].dataId;
+                            var dataName = data[i].dataName;
+                            $("#PE_TECHNICAL").append("<option value='+ dataId +'>" + dataName + "</option>")
+                        }
+                    }
+                }
+            )
+        })
+    </script>
+</head>
+<body>
+<form id="addPersonForm" action="/addPerson" method="post">
+    <table>
+        <tr>
+            <th>人员姓名</th>
+            <td><input type="text" name="peName"></td>
+            <th>性别</th>
+            <td>
+                <input type="radio" name="peSex">男
+                <input type="radio" name="peSex">女
+            </td>
+        </tr>
+        <tr>
+            <th>出生日期</th>
+            <td><input type="text" name="peBirthday"></td>
+            <th>毕业院校</th>
+            <td><input type="text" name="peSchool"></td>
+        </tr>
+        <tr>
+            <th>专业</th>
+            <td>
+                <select id="PE_PROFESSIONAL" name="peProfessional">
+                    <option>-请选择-</option>
+                </select>
+            </td>
+            <th>学历</th>
+            <td>
+                <select id="PE_RECORD" name="peRecord">
+                    <option>-请选择-</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>毕业日期</th>
+            <td><input type="text" name="peFinishSchool"></td>
+            <th>身份证号</th>
+            <td><input type="text" name="peCardid"></td>
+        </tr>
+        <tr>
+            <th>技术职称</th>
+            <td>
+                <select id="PE_TECHNICAL" name="peTechnical">
+                    <option>-请选择-</option>
+                </select>
+            </td>
+            <th>评定日期</th>
+            <td><input type="text" name="peAssessDate"></td>
+        </tr>
+        <tr>
+            <th>通讯地址</th>
+            <td><input type="text" name="peAddress"></td>
+            <th>联系电话</th>
+            <td><input type="text" name="peTel"></td>
+        </tr>
+        <tr>
+            <th>业务专长</th>
+            <td colspan="3"><input type="text" style="width:380px;height:80px" name="peSpeciality"></td>
+        </tr>
+        <tr>
+            <th colspan="4">
+                <button type="button" onclick="add_person_submit()">保存</button>
+            </th>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

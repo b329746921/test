@@ -7,7 +7,6 @@
     <script>
         function toSignin() {
             $(location).attr('href', 'signin');
-            return false
         }
 
         $(function () {
@@ -40,7 +39,7 @@
         </tr>
         <tr>
             <th><button>立即注册</button></th>
-            <th><button onclick="return toSignin();">返回登录</button></th>
+            <th><button type="button" onclick="toSignin()">返回登录</button></th>
         </tr>
     </table>
 </form>
