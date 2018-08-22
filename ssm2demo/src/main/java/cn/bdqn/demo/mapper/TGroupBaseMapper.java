@@ -1,9 +1,7 @@
 package cn.bdqn.demo.mapper;
 
 import cn.bdqn.demo.pojo.TGroupBase;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
 public interface TGroupBaseMapper {
     int deleteByPrimaryKey(Long baseId);
 
@@ -11,9 +9,9 @@ public interface TGroupBaseMapper {
 
     int insertSelective(TGroupBase record);
 
-    TGroupBase selectByPrimaryKey(Long baseId);
+    TGroupBase selectByGrId(Long grId);
 
-    int updateByPrimaryKeySelective(TGroupBase record);
+    int updateByGrIdSelective(TGroupBase record);
 
     int updateByPrimaryKey(TGroupBase record);
 }

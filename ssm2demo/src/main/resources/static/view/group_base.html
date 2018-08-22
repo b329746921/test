@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>基本信息申报</title>
+    <script src="/util/jquery.js"></script>
+    <script>
+        function toSignin() {
+            $(location).attr('href', 'signin');
+            return false
+        }
+
+        $(function () {
+            $.post(
+                "getData ",
+                {code : "BASE_TYPE"},
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("服务异常，异常代码：" + result.code + " 异常信息：" + result.msg);
+                    } else {
+                        var data = result.data;
+                        for(var i in data){
+                            var dataId = data[i].dataId;
+                            var dataName = data[i].dataName;
+                            $("#BASE_TYPE").append("<option value='+ dataId +'>" + dataName + "</option>")
+                        }
+                    }
+                }
+            )
+
+            $.post(
+                "getData ",
+                {code : "BASE_AREA"},
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("服务异常，异常代码：" + result.code + " 异常信息：" + result.msg);
+                    } else {
+                        var data = result.data;
+                        for(var i in data){
+                            var dataId = data[i].dataId;
+                            var dataName = data[i].dataName;
+                            $("#BASE_AREA").append("<option value='+ dataId +'>" + dataName + "</option>")
+                        }
+                    }
+                }
+            )
+        })
+    </script>
+</head>
+<body>
+<form action="" method="post">
+    <table>
+        <tr>
+            <th>机构性质</th>
+            <th>
+                <select style="width:140px;" name="baseType" id="BASE_TYPE">
+                    <option>-请选择-</option>
+                </select>
+            </th>
+        </tr>
+        <tr>
+            <th>行政区属</th>
+            <th>
+                <select style="width:140px;" name="baseArea" id="BASE_AREA">
+                    <option>-请选择-</option>
+                </select>
+            </th>
+        </tr>
+        <tr>
+            <th>联系地址</th>
+            <th><input type="text" style="width:135px;" name="baseAddress"/></th>
+        </tr>
+        <tr>
+            <th>邮编</th>
+            <th><input type="text" style="width:135px;" name="basePostcode"/></th>
+        </tr>
+        <tr>
+            <th>联系电话</th>
+            <th><input type="text" style="width:135px;" name="baseTel"/></th>
+        </tr>
+        <tr>
+            <th>传真</th>
+            <th><input type="text" style="width:135px;" name="baseFax"/></th>
+        </tr>
+        <tr>
+            <th>邮箱</th>
+            <th><input type="text" style="width:135px;" name="baseEmail"/></th>
+        </tr>
+        <tr>
+            <th colspan="2">
+                <button>保存</button>
+            </th>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

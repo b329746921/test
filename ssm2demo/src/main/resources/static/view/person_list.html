@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>人员信息</title>
+    <script src="/util/jquery.js"></script>
+    <script>
+        var lastPageNo = 1
+        var nextPageNo = 1
+        var endPageNo = 1
+        var pageSize = 10
+        function getPersonList(pageNo, privtePageSize){
+            if (pageNo < 1){
+                alert("没有了")
+                return;
+            }
+            $.get(
+                "/getPersonList",
+                {pageNo:pageNo,pageSize:privtePageSize},
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("服务异常，异常代码：" + result.code + " 异常信息：" + result.msg);
+                    } else {
+                        $("#personList").empty()
+                        $("#personList").append("<tr>" +
+                            "<th>选择</th>" +
+                            "<th>姓名</th>" +
+                            "<th>性别</th>" +
+                            "<th>出生日期</th>" +
+                            "<th>专业</th>" +
+                            "<th>学历</th>" +
+                            "<th>职称</th>" +
+                            "<th>身份证号</th>" +
+                            "<th>操作</th>" +
+                            "</tr>")
+                        var data = result.data.list;
+                        for(var i in data){
+                            var peName = data[i].peName;
+                            var peSex = data[i].peSex;
+                            var peBirthday = data[i].peBirthday;
+                            var peProfessional = data[i].peProfessional;
+                            var peRecord = data[i].peRecord;
+                            var peTechnical = data[i].peTechnical;
+                            var peCardid = data[i].peCardid;
+                            $("#personList").append("<tr>" +
+                                "<th><input type='radio' name='select'></th>" +
+                                "<th>"+peName+"</th>" +
+                                "<th>"+peSex+"</th>" +
+                                "<th>"+peBirthday+"</th>" +
+                                "<th>"+peProfessional+"</th>" +
+                                "<th>"+peRecord+"</th>" +
+                                "<th>"+peTechnical+"</th>" +
+                                "<th>"+peCardid+"</th>" +
+                                "<th><a href='*'>修改</a></th>" +
+                                "</tr>")
+                        }
+                        lastPageNo = result.data.prePage
+                        nextPageNo = result.data.nextPage
+                        endPageNo = result.data.pages
+                        pageSize = result.data.pageSize
+                        var total = result.data.total
+                        var pageNum = result.data.pageNum
+                        var pages = result.data.pages
+                        $("#text").html("共"+total+"条数据，第"+pageNum+"页/共"+pages+"页")
+                    }
+                }
+            )
+        }
+        $(function () {
+            getPersonList(1, 10)
+
+        })
+    </script>
+</head>
+<body>
+<form action="" style="margin:0px;display:inline;">
+    人员搜索： 姓名<input type="text" name="peName"/> 身份证号<input type="text" name="peCardid"> <input type="submit" value="搜索">
+</form>
+<input type="submit" id="addPerson" value="新增人员">
+<table id="personList">
+
+</table>
+<div id="navigation">
+    <a href="javascript:void(0)" onclick="getPersonList(1, pageSize)">首页</a>|
+    <a href="javascript:void(0)" onclick="getPersonList(lastPageNo, pageSize)">上一页</a>|
+    <a href="javascript:void(0)" onclick="getPersonList(nextPageNo, pageSize)">下一页</a>|
+    <a href="javascript:void(0)" onclick="getPersonList(endPageNo, pageSize)">末页</a>|
+    <span id="text">document.write text</span>
+</div>
+</body>
+</html>

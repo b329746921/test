@@ -1,9 +1,7 @@
 package cn.bdqn.demo.mapper;
 
 import cn.bdqn.demo.pojo.TGroup;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
 public interface TGroupMapper {
     int deleteByPrimaryKey(Long grId);
 

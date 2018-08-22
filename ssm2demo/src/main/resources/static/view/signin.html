@@ -3,6 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
+    <script src="/util/jquery.js"></script>
+    <script>
+        function toSignup() {
+            $(location).attr('href', 'signup');
+            return false
+        }
+
+        $(function () {
+
+        })
+    </script>
 </head>
 <body>
 <form action="/signin" method="post">
@@ -17,7 +28,7 @@
         </tr>
         <tr>
             <th><button>立即登录</button></th>
-            <th><button>前往注册</button></th>
+            <th><button onclick="return toSignup();">前往注册</button></th>
         </tr>
     </table>
 </form>

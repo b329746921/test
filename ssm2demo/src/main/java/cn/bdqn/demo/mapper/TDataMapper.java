@@ -1,9 +1,9 @@
 package cn.bdqn.demo.mapper;
 
 import cn.bdqn.demo.pojo.TData;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
+import java.util.List;
+
 public interface TDataMapper {
     int deleteByPrimaryKey(Integer dataId);
 
@@ -12,6 +12,8 @@ public interface TDataMapper {
     int insertSelective(TData record);
 
     TData selectByPrimaryKey(Integer dataId);
+
+    List<TData> selectAll();
 
     int updateByPrimaryKeySelective(TData record);
 

@@ -10,13 +10,13 @@ public class CommonResp<T> {
     private T data;
 
     public static <K> CommonResp<K> getSuccessResp(K data) {
-        CommonResp resp = new CommonResp("", "成功");
+        CommonResp resp = new CommonResp("0000", "成功");
         resp.setData(data);
         return resp;
     }
 
     public static CommonResp getFailedResp() {
-        CommonResp resp = new CommonResp("", "系统异常");
+        CommonResp resp = new CommonResp("9999", "系统异常");
         return resp;
     }
 

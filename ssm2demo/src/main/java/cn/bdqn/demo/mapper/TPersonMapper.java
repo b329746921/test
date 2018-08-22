@@ -1,9 +1,9 @@
 package cn.bdqn.demo.mapper;
 
 import cn.bdqn.demo.pojo.TPerson;
-import org.apache.ibatis.annotations.Mapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 
-@Mapper
 public interface TPersonMapper {
     int deleteByPrimaryKey(Long peId);
 
@@ -16,4 +16,6 @@ public interface TPersonMapper {
     int updateByPrimaryKeySelective(TPerson record);
 
     int updateByPrimaryKey(TPerson record);
+
+    Page<TPerson> selectByPage();
 }

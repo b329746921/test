@@ -1,9 +1,7 @@
 package cn.bdqn.demo.mapper;
 
 import cn.bdqn.demo.pojo.TPersonRelation;
-import org.apache.ibatis.annotations.Mapper;
 
-@Mapper
 public interface TPersonRelationMapper {
     int deleteByPrimaryKey(Long reId);
 

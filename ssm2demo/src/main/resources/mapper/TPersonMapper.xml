@@ -29,6 +29,11 @@
     from t_person
     where PE_ID = #{peId,jdbcType=BIGINT}
   </select>
+    <select id="selectByPage" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_person
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from t_person
     where PE_ID = #{peId,jdbcType=BIGINT}
