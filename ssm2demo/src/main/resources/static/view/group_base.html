@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>基本信息申报</title>
     <script src="/util/jquery.js"></script>
+    <script src="/util/jquery-cookie.js"></script>
     <script>
         function toSignin() {
             $(location).attr('href', 'signin');
@@ -22,8 +23,22 @@
                         for(var i in data){
                             var dataId = data[i].dataId;
                             var dataName = data[i].dataName;
-                            $("#"+code_type).append("<option value='+ dataId +'>" + dataName + "</option>")
+                            $("#"+code_type).append("<option value="+ dataId +">" + dataName + "</option>")
                         }
+                    }
+                }
+            )
+        }
+
+        function groupBase() {
+            $.post(
+                "/groupBase",
+                $("#groupBase_form").serialize(),
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("获取信息失败");
+                    } else {
+                        window.location.replace(result.redirectUrl)
                     }
                 }
             )
@@ -33,11 +48,34 @@
             getData("BASE_TYPE")
             getData("BASE_AREA")
 
+            var grId = $.cookie("grId");
+            $.post(
+                "getGroupBase",
+                {"grId":grId},
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("获取信息失败");
+                    } else {
+                        var data = result.data;
+                        if (data) {
+                            $("#BASE_TYPE").find("option[value = '"+data.baseType+"']").attr("selected","selected");
+                            $("#BASE_AREA").find("option[value = '"+data.baseArea+"']").attr("selected","selected");
+                            $("#baseAddress").val(data.baseAddress);
+                            $("#basePostcode").val(data.basePostcode);
+                            $("#baseTel").val(data.baseTel);
+                            $("#baseFax").val(data.baseFax);
+                            $("#baseEmail").val(data.baseEmail);
+                            $("#baseId").val(data.baseId);
+                            $("#grId").val(data.grId);
+                        }
+                    }
+                }
+            )
         })
     </script>
 </head>
 <body>
-<form action="" method="post">
+<form action="/groupBase" method="post" id="groupBase_form">
     <table>
         <tr>
             <th>机构性质</th>
@@ -57,27 +95,29 @@
         </tr>
         <tr>
             <th>联系地址</th>
-            <th><input type="text" style="width:135px;" name="baseAddress"/></th>
+            <th><input type="text" style="width:135px;" name="baseAddress" id="baseAddress"/></th>
         </tr>
         <tr>
             <th>邮编</th>
-            <th><input type="text" style="width:135px;" name="basePostcode"/></th>
+            <th><input type="text" style="width:135px;" name="basePostcode" id="basePostcode"/></th>
         </tr>
         <tr>
             <th>联系电话</th>
-            <th><input type="text" style="width:135px;" name="baseTel"/></th>
+            <th><input type="text" style="width:135px;" name="baseTel" id="baseTel"/></th>
         </tr>
         <tr>
             <th>传真</th>
-            <th><input type="text" style="width:135px;" name="baseFax"/></th>
+            <th><input type="text" style="width:135px;" name="baseFax" id="baseFax"/></th>
         </tr>
         <tr>
             <th>邮箱</th>
-            <th><input type="text" style="width:135px;" name="baseEmail"/></th>
+            <th><input type="text" style="width:135px;" name="baseEmail" id="baseEmail"/></th>
         </tr>
+        <input type="hidden" name="baseId" id="baseId"></input>
+        <input type="hidden" name="grId" id="grId"></input>
         <tr>
             <th colspan="2">
-                <button>保存</button>
+                <button type="button" onclick="groupBase()">保存</button>
             </th>
         </tr>
     </table>

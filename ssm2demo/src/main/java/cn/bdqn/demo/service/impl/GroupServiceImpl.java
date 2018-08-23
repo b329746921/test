@@ -63,15 +63,12 @@ public class GroupServiceImpl implements GroupService {
                 throw new RuntimeException("t_group_base修改数据失败");
             }
         }
-        return CommonResp.getSuccessResp(Boolean.TRUE);
+        return CommonResp.getSuccessResp(Boolean.TRUE, "index");
     }
 
     @Override
     public CommonResp getGroupBase(TGroupBase tGroupBase) {
         TGroupBase groupBase = tGroupBaseMapper.selectByGrId(tGroupBase.getGrId());
-        if (groupBase == null) {
-            return CommonResp.getSuccessResp(Boolean.FALSE);
-        }
-        return CommonResp.getSuccessResp(Boolean.TRUE);
+        return CommonResp.getSuccessResp(groupBase);
     }
 }
