@@ -9,24 +9,80 @@
             $(location).attr('href', 'signup');
         }
 
+        function sginin() {
+            if (!checkText("grCode")) {
+                return
+            }
+            if (!checkText("grPassword")) {
+                return
+            }
+            $("#signin_form").submit()
+        }
+
+        function checkText(text_id){
+            var item = $("#"+text_id);
+            var attr = item.attr("placeholder");
+            var val = $.trim(item.val());
+            if (text_id != "grCode") {
+                return checkNullText(val, item, attr)
+            } else {
+                if (val == "") {
+                    return checkNullText(val, item, "登录名")
+                } else {
+                    return checkGrCodeText(val, item)
+                }
+            }
+            return true
+        }
+
+        function checkNullText(val, item, attr){
+            if (val == "") {
+                var $parent_tr = item.parents('tr');
+                var $msg = $parent_tr.children("td.check_msg");
+                if ($msg.length == 0) {
+                    $parent_tr.append("<td class='check_msg'><span style='color:red;font-size: 14px'>" + attr + "不能为空</span></td>");
+                }
+                return false
+            }
+            return true
+        }
+
+        function checkGrCodeText(val, item) {
+            var p = /^[A-Za-z0-9]{0,20}$/
+            if (!p.test(val)) {
+                var $parent_tr = item.parents('tr');
+                var $msg = $parent_tr.children("td.check_msg");
+                if ($msg.length == 0) {
+                    $parent_tr.append("<td class='check_msg'><span style='color:red;font-size: 14px'>a-zA-Z0-9不能超过20位</span></td>");
+                }
+                return false
+            }
+            return true
+        }
+
+        function removeMsg(text_id){
+            var item = $("#"+text_id);
+            item.parents('tr').children("td.check_msg").remove();
+        }
+
         $(function () {
 
         })
     </script>
 </head>
 <body>
-<form action="/signin" method="post">
+<form action="/signin" method="post" id="signin_form">
     <table>
         <tr>
             <th>登录名:</th>
-            <th><input type="text" name="grCode" placeholder="a-zA-Z0-9不能超过20位" max="20"></th>
+            <th><input type="text" id="grCode" name="grCode" placeholder="a-zA-Z0-9不能超过20位" max="20" onblur="checkText(id)" onfocus="removeMsg(id)"></th>
         </tr>
         <tr>
             <th>密码:</th>
-            <th><input type="password" name="grPassword" placeholder="密码" ></th>
+            <th><input type="password" id="grPassword" name="grPassword" placeholder="密码" onblur="checkText(id)" onfocus="removeMsg(id)"></th>
         </tr>
         <tr>
-            <th><button>立即登录</button></th>
+            <th><button type="button" onclick="sginin()">立即登录</button></th>
             <th><button type="button" onclick="toSignup()">前往注册</button></th>
         </tr>
     </table>

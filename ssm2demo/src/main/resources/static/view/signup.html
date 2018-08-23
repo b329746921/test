@@ -9,6 +9,38 @@
             $(location).attr('href', 'signin');
         }
 
+        function checkText(text_id){
+            var item = $("#"+text_id);
+            var attr = item.attr("placeholder");
+            var val = $.trim(item.val());
+            if (text_id != "grCode") {
+                if (val != "") {
+                    if (text_id == "reGrPassword") {
+                        var grPassWord = $("#grPassword").val();
+                        if (val != grPassWord) {
+                            item.parents('tr').append("<td class='msg'><span style='color:red;font-size: 14px'>两次密码不同</span></td>");
+                        }
+                    }
+                } else {
+                    item.parents('tr').append("<td class='msg'><span style='color:red;font-size: 14px'>" + attr + "不能为空</span></td>");
+                }
+            } else {
+                if (val == "") {
+                    item.parents('tr').append("<td class='msg'><span style='color:red;font-size: 14px'>登录名不能为空</span></td>");
+                } else {
+                    var p = /^[A-Za-z0-9]{0,20}$/
+                    if (!p.test(val)) {
+                        item.parents('tr').append("<td class='msg'><span style='color:red;font-size: 14px'>a-zA-Z0-9不能超过20位</span></td>");
+                    }
+                }
+            }
+        }
+
+        function removeMsg(text_id){
+            var item = $("#"+text_id);
+            item.parents('tr').children("td.msg").remove();
+        }
+
         $(function () {
 
         })
@@ -18,24 +50,24 @@
 <form action="/signup" method="post">
     <table>
         <tr>
-            <th>登录名:</th>
-            <th><input type="text" name="grCode" placeholder="a-zA-Z0-9不能超过20位" max="20"></th>
+            <th>登录名*:</th>
+            <th><input type="text" id="grCode" name="grCode" placeholder="a-zA-Z0-9不能超过20位" max="20" onblur="checkText(id)" onfocus="removeMsg(id)"></th>
         </tr>
         <tr>
-            <th>机构名称:</th>
-            <th><input type="text" name="grName" placeholder="机构名称" ></th>
+            <th>机构名称*:</th>
+            <th><input type="text" id="grName" name="grName" placeholder="机构名称" onblur="checkText(id)" onfocus="removeMsg(id)"></th>
         </tr>
         <tr>
-            <th>营业许可证:</th>
-            <th><input type="text" name="grLicense" placeholder="营业许可证" ></th>
+            <th>营业许可证*:</th>
+            <th><input type="text" id="grLicense" name="grLicense" placeholder="营业许可证" onblur="checkText(id)" onfocus="removeMsg(id)"></th>
         </tr>
         <tr>
-            <th>密码:</th>
-            <th><input type="password" name="grPassword" placeholder="密码" ></th>
+            <th>密码*:</th>
+            <th><input type="password" id="grPassword" name="grPassword" placeholder="密码" onblur="checkText(id)" onfocus="removeMsg(id)"></th>
         </tr>
         <tr>
-            <th>确认密码:</th>
-            <th><input type="password" placeholder="确认密码" ></th>
+            <th>确认密码*:</th>
+            <th><input type="password" id="reGrPassword" placeholder="确认密码" onblur="checkText(id)" onfocus="removeMsg(id)"></th>
         </tr>
         <tr>
             <th><button>立即注册</button></th>
