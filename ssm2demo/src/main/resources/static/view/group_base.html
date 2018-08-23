@@ -45,8 +45,10 @@
         }
 
         $(function () {
+            $.ajaxSettings.async = false;
             getData("BASE_TYPE")
             getData("BASE_AREA")
+            $.ajaxSettings.async = true;
 
             var grId = $.cookie("grId");
             $.post(
