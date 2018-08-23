@@ -16,7 +16,17 @@
             if (!checkText("grPassword")) {
                 return
             }
-            $("#signin_form").submit()
+            $.post(
+                "/signin",
+                $('#signin_form').serialize(),
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("账号或密码错误");
+                    } else {
+                        window.location.replace(result.data)
+                    }
+                }
+            )
         }
 
         function checkText(text_id){

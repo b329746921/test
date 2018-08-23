@@ -9,45 +9,103 @@
             $(location).attr('href', 'signin');
         }
 
+        function signup() {
+            alert(1)
+            if (!checkText("grCode")) {
+                return
+            }
+            alert(2)
+            if (!checkText("grName")) {
+                return
+            }
+            alert(3)
+            if (!checkText("grLicense")) {
+                return
+            }
+            alert(4)
+            if (!checkText("grPassword")) {
+                return
+            }
+            alert(5)
+            if (!checkText("reGrPassword")) {
+                return
+            }
+            $.post(
+                "/signup",
+                $('#signup_form').serialize(),
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("信息填写有误");
+                    } else {
+                        window.location.replace(result.data)
+                    }
+                }
+            )
+        }
+
         function checkText(text_id){
             var item = $("#"+text_id);
             var attr = item.attr("placeholder");
             var val = $.trim(item.val());
             if (text_id != "grCode") {
-                if (val != "") {
-                    if (text_id == "reGrPassword") {
-                        var grPassWord = $("#grPassword").val();
-                        if (val != grPassWord) {
-                            item.parents('tr').append("<td class='msg'><span style='color:red;font-size: 14px'>两次密码不同</span></td>");
-                        }
-                    }
-                } else {
-                    item.parents('tr').append("<td class='msg'><span style='color:red;font-size: 14px'>" + attr + "不能为空</span></td>");
+                if (val == "") {
+                    return checkNullText(val, item, attr)
+                }
+                if (text_id == "reGrPassword") {
+                    return checkRePassworText(val, item)
                 }
             } else {
                 if (val == "") {
-                    item.parents('tr').append("<td class='msg'><span style='color:red;font-size: 14px'>登录名不能为空</span></td>");
-                } else {
-                    var p = /^[A-Za-z0-9]{0,20}$/
-                    if (!p.test(val)) {
-                        item.parents('tr').append("<td class='msg'><span style='color:red;font-size: 14px'>a-zA-Z0-9不能超过20位</span></td>");
-                    }
+                    aler(10)
+                    return checkNullText(val, item, "登录名")
                 }
+                return checkGrCodeText(val, item)
             }
+            return true
+        }
+
+        function checkNullText(val, item, attr){
+            if (val == "") {
+                var $parent_tr = item.parents('tr');
+                var $msg = $parent_tr.children("td.check_msg");
+                if ($msg.length == 0) {
+                    $parent_tr.append("<td class='check_msg'><span style='color:red;font-size: 14px'>" + attr + "不能为空</span></td>");
+                }
+                return false
+            }
+            return true
+        }
+
+        function checkGrCodeText(val, item) {
+            var p = /^[A-Za-z0-9]{0,20}$/
+            if (!p.test(val)) {
+                var $parent_tr = item.parents('tr');
+                var $msg = $parent_tr.children("td.check_msg");
+                if ($msg.length == 0) {
+                    $parent_tr.append("<td class='check_msg'><span style='color:red;font-size: 14px'>a-zA-Z0-9不能超过20位</span></td>");
+                }
+                return false
+            }
+            return true
+        }
+
+        function checkRePassworText(val, item){
+            var grPassWord = $("#grPassword").val();
+            if (val != grPassWord) {
+                item.parents('tr').append("<td class='msg'><span style='color:red;font-size: 14px'>两次密码不同</span></td>");
+                return false
+            }
+            return true
         }
 
         function removeMsg(text_id){
             var item = $("#"+text_id);
-            item.parents('tr').children("td.msg").remove();
+            item.parents('tr').children("td.check_msg").remove();
         }
-
-        $(function () {
-
-        })
     </script>
 </head>
 <body>
-<form action="/signup" method="post">
+<form action="/signup" method="post" id="signup_form">
     <table>
         <tr>
             <th>登录名*:</th>
@@ -70,7 +128,7 @@
             <th><input type="password" id="reGrPassword" placeholder="确认密码" onblur="checkText(id)" onfocus="removeMsg(id)"></th>
         </tr>
         <tr>
-            <th><button>立即注册</button></th>
+            <th><button type="button" onclick="signup()">立即注册</button></th>
             <th><button type="button" onclick="toSignin()">返回登录</button></th>
         </tr>
     </table>

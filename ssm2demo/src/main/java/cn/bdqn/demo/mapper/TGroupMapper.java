@@ -11,6 +11,8 @@ public interface TGroupMapper {
 
     TGroup selectByPrimaryKey(Long grId);
 
+    TGroup signin(TGroup record);
+
     int updateByPrimaryKeySelective(TGroup record);
 
     int updateByPrimaryKey(TGroup record);

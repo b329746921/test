@@ -6,13 +6,16 @@ import cn.bdqn.demo.service.GroupService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.annotation.Resource;
 
 /**
  *
  **/
-@Controller
+@RestController
 public class SignController {
 
     @Resource
@@ -22,8 +25,12 @@ public class SignController {
      * 企业登录
      */
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public String groupSignin(){
-        return "redirect:index";
+    public CommonResp groupSignin(TGroup tGroup){
+        if (tGroup == null || tGroup.getGrCode() == null || tGroup.getGrPassword() == null) {
+            System.out.println("参数错了");
+        }
+        CommonResp resp = groupService.groupSignin(tGroup);
+        return resp;
     }
 
 
@@ -32,7 +39,6 @@ public class SignController {
      */
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public CommonResp groupSignup(TGroup tGroup){
-        System.out.println(tGroup);
         return groupService.groupSignup(tGroup);
     }
 }

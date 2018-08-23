@@ -10,7 +10,7 @@ import cn.bdqn.demo.pojo.TGroupBase;
  **/
 public interface GroupService {
 
-    CommonResp groupSignin();
+    CommonResp groupSignin(TGroup tGroup);
 
     CommonResp groupSignup(TGroup tGroup);
 

@@ -22,10 +22,12 @@ public class GroupServiceImpl implements GroupService {
     private TGroupBaseMapper tGroupBaseMapper;
 
     @Override
-    public CommonResp<TGroup> groupSignin() {
-        TGroup tGroup = tGroupMapper.selectByPrimaryKey(1L);
-        System.out.println(tGroup.getGrName());
-        return CommonResp.getSuccessResp(tGroup);
+    public CommonResp<String> groupSignin(TGroup tGroup) {
+        TGroup group = tGroupMapper.signin(tGroup);
+        if (group == null) {
+            return CommonResp.getFailedResp();
+        }
+        return CommonResp.getSuccessResp("index");
     }
 
     @Override
@@ -34,7 +36,7 @@ public class GroupServiceImpl implements GroupService {
         if (count != 1) {
             throw new RuntimeException("t_group添加数据失败");
         }
-        return CommonResp.getSuccessResp(Boolean.TRUE);
+        return CommonResp.getSuccessResp("signin");
     }
 
     @Override
