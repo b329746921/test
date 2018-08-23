@@ -12,5 +12,5 @@ import java.util.List;
 public interface DataService {
     List<TData> getDataAll();
 
-    CommonResp<List<TData>> getDataList(DataTypeEnum dataTypeEnum);
+    CommonResp<List<TData>> getCacheDataList(DataTypeEnum dataTypeEnum);
 }

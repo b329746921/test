@@ -22,6 +22,6 @@ public class AjaxController {
 
     @RequestMapping(value = "getData", method = RequestMethod.POST)
     public CommonResp<List<TData>> getData(String code){
-        return dataService.getDataList(DataTypeEnum.getDataTypeEnum(code));
+        return dataService.getCacheDataList(DataTypeEnum.getDataTypeEnum(code));
     }
 }

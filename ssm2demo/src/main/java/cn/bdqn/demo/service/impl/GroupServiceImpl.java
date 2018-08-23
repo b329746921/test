@@ -21,6 +21,11 @@ public class GroupServiceImpl implements GroupService {
     @Resource
     private TGroupBaseMapper tGroupBaseMapper;
 
+    /**
+     * 登录实现方法
+     * @param tGroup
+     * @return
+     */
     @Override
     public CommonResp<String> groupSignin(TGroup tGroup) {
         TGroup group = tGroupMapper.signin(tGroup);
@@ -30,6 +35,11 @@ public class GroupServiceImpl implements GroupService {
         return CommonResp.getSuccessResp("index");
     }
 
+    /**
+     * 注册实现方法
+     * @param tGroup
+     * @return
+     */
     @Override
     public CommonResp groupSignup(TGroup tGroup) {
         int count = tGroupMapper.insertSelective(tGroup);

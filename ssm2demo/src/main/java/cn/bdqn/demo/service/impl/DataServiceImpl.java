@@ -20,13 +20,22 @@ public class DataServiceImpl implements DataService {
     @Resource
     private TDataMapper tDataMapper;
 
+    /**
+     * 获取所有字典值
+     * @return
+     */
     @Override
     public List<TData> getDataAll() {
         return tDataMapper.selectAll();
     }
 
+    /**
+     * 获取缓存中字典list
+     * @param dataTypeEnum
+     * @return
+     */
     @Override
-    public CommonResp<List<TData>> getDataList(DataTypeEnum dataTypeEnum) {
+    public CommonResp<List<TData>> getCacheDataList(DataTypeEnum dataTypeEnum) {
         List<TData> dataList = SchedulingConfig.DATA_CONTAINER.get(dataTypeEnum.getCode());
         return CommonResp.getSuccessResp(dataList);
     }
