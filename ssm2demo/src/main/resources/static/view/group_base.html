@@ -58,8 +58,6 @@
                     } else {
                         var data = result.data;
                         if (data) {
-                            $("#BASE_TYPE").find("option[value = '"+data.baseType+"']").attr("selected","selected");
-                            $("#BASE_AREA").find("option[value = '"+data.baseArea+"']").attr("selected","selected");
                             $("#baseAddress").val(data.baseAddress);
                             $("#basePostcode").val(data.basePostcode);
                             $("#baseTel").val(data.baseTel);
@@ -67,6 +65,8 @@
                             $("#baseEmail").val(data.baseEmail);
                             $("#baseId").val(data.baseId);
                             $("#grId").val(data.grId);
+                            $("#BASE_TYPE").find("option[value = '"+data.baseType+"']").attr("selected","selected");
+                            $("#BASE_AREA").find("option[value = '"+data.baseArea+"']").attr("selected","selected");
                         }
                     }
                 }
