@@ -27,12 +27,12 @@ public class GroupServiceImpl implements GroupService {
      * @return
      */
     @Override
-    public CommonResp<String> groupSignin(TGroup tGroup) {
+    public CommonResp<TGroup> groupSignin(TGroup tGroup) {
         TGroup group = tGroupMapper.signin(tGroup);
         if (group == null) {
             return CommonResp.getFailedResp();
         }
-        return CommonResp.getSuccessResp("index");
+        return CommonResp.getSuccessResp(group, "index");
     }
 
     /**
@@ -46,7 +46,7 @@ public class GroupServiceImpl implements GroupService {
         if (count != 1) {
             throw new RuntimeException("t_group添加数据失败");
         }
-        return CommonResp.getSuccessResp("signin");
+        return CommonResp.getSuccessResp(null, "signin");
     }
 
     @Override
@@ -62,6 +62,15 @@ public class GroupServiceImpl implements GroupService {
             if (count != 1) {
                 throw new RuntimeException("t_group_base修改数据失败");
             }
+        }
+        return CommonResp.getSuccessResp(Boolean.TRUE);
+    }
+
+    @Override
+    public CommonResp getGroupBase(TGroupBase tGroupBase) {
+        TGroupBase groupBase = tGroupBaseMapper.selectByGrId(tGroupBase.getGrId());
+        if (groupBase == null) {
+            return CommonResp.getSuccessResp(Boolean.FALSE);
         }
         return CommonResp.getSuccessResp(Boolean.TRUE);
     }

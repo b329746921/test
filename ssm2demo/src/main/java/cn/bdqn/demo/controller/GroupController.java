@@ -6,13 +6,14 @@ import cn.bdqn.demo.service.GroupService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
 /**
  *
  **/
-@Controller
+@RestController
 public class GroupController {
 
     @Resource
@@ -21,5 +22,10 @@ public class GroupController {
     @RequestMapping(value = "/groupBase", method = RequestMethod.POST)
     public CommonResp groupBase(TGroupBase tGroupBase){
         return groupService.groupBase(tGroupBase);
+    }
+
+    @RequestMapping(value = "/getGroupBase", method = RequestMethod.POST)
+    public CommonResp getGroupBase(TGroupBase tGroupBase){
+        return groupService.getGroupBase(tGroupBase);
     }
 }

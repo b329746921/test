@@ -10,10 +10,10 @@
             return false
         }
 
-        $(function () {
+        function getData(code_type){
             $.post(
                 "getData ",
-                {code : "BASE_TYPE"},
+                {code : code_type},
                 function (result) {
                     if (result.code != '0000') {
                         alert("服务异常，异常代码：" + result.code + " 异常信息：" + result.msg);
@@ -22,28 +22,17 @@
                         for(var i in data){
                             var dataId = data[i].dataId;
                             var dataName = data[i].dataName;
-                            $("#BASE_TYPE").append("<option value='+ dataId +'>" + dataName + "</option>")
+                            $("#"+code_type).append("<option value='+ dataId +'>" + dataName + "</option>")
                         }
                     }
                 }
             )
+        }
 
-            $.post(
-                "getData ",
-                {code : "BASE_AREA"},
-                function (result) {
-                    if (result.code != '0000') {
-                        alert("服务异常，异常代码：" + result.code + " 异常信息：" + result.msg);
-                    } else {
-                        var data = result.data;
-                        for(var i in data){
-                            var dataId = data[i].dataId;
-                            var dataName = data[i].dataName;
-                            $("#BASE_AREA").append("<option value='+ dataId +'>" + dataName + "</option>")
-                        }
-                    }
-                }
-            )
+        $(function () {
+            getData("BASE_TYPE")
+            getData("BASE_AREA")
+
         })
     </script>
 </head>

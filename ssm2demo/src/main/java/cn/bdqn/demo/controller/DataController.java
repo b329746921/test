@@ -15,7 +15,7 @@ import java.util.List;
  *
  **/
 @RestController
-public class AjaxController {
+public class DataController {
 
     @Resource
     private DataService dataService;

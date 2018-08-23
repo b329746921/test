@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>企业申报系统</title>
+    <script src="/util/jquery.js"></script>
+    <script src="/util/jquery-cookie.js"></script>
+    <script>
+        $(function () {
+            var grId = $.cookie("grId");
+            if (grId == "") {
+                return
+            }
+            $.post(
+                "getGroupBase",
+                {"grId":grId},
+                function (result) {
+                    if (result.code != '0000') {
+                        alert("账号或密码错误");
+                    } else {
+                        if (result.data) {
+                            $("#groupBase").after("(已填报)")
+                        } else {
+                            $("#groupBase").after("(未填报)")
+                        }
+                    }
+                }
+            );
+
+
+        })
+    </script>
+</head>
+<body>
+<table>
+    <tr>
+        <th><a href="/groupBase" id="groupBase">基本情况</a></th>
+    </tr>
+    <tr>
+        <th><a href="">组织机构框图</a></th>
+    </tr>
+    <tr>
+        <th><a href="/personList">在岗人员情况</a></th>
+    </tr>
+    <tr>
+        <th><a href="">企业负责人情况</a></th>
+    </tr>
+    <tr>
+        <th><a href="">打印申请书</a></th>
+    </tr>
+</table>
+</body>
+</html>

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  *
  **/
@@ -29,8 +31,9 @@ public class PageController {
      * 跳转到企业申报系统主界面
      */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String toIndex(){
-        return "index";
+    public String toIndex(String grId, HttpServletRequest request){
+        request.setAttribute("grId", grId);
+        return "index_page";
     }
 
     /**
