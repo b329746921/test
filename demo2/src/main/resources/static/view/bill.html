@@ -6,6 +6,22 @@
     <script src="/util/jquery.js"></script>
     <script>
         function submitUpdate() {
+            if (typeof($("#billstatus").attr("disabled")) != "undefined") {
+                alert("已处理的订单不能提交")
+                return false;
+            }
+            if ($('#goodsname').val().length == 0) {
+                alert("商品名不能为空");
+                return false;
+            }
+            if ($('#goodsprice').val() < 0) {
+                alert("价格不能小于0")
+                return false;
+            }
+            if ($('#goodscount').val() < 0) {
+                alert("数量不能小于0")
+                return false;
+            }
             $.post(
                 "update",
                 $('#updateForm').serialize(),
@@ -17,7 +33,7 @@
                         alert('修改失败')
                     }
                 }
-            )
+            );
             return false;
         }
 
@@ -31,6 +47,25 @@
                     $("#goodsprice").val(result.goodsprice)
                     $("#goodscount").val(result.goodscount)
                     $("#billstatus").val(result.billstatus)
+                    if (result.billstatus == 2) {
+                        $("#goodsname").attr("readonly", "readonly");
+                        $("#goodsname").attr("style", "background-color:#cccccc;");
+                        $("#goodsprice").attr("readonly", "readonly");
+                        $("#goodsprice").attr("style", "background-color:#cccccc;");
+                        $("#goodscount").attr("readonly", "readonly");
+                        $("#goodscount").attr("style", "background-color:#cccccc;");
+                        $("#billstatus").attr("disabled", "disabled");
+                        $("#billstatus").attr("style", "background-color:#cccccc;");
+                    } else {
+                        $("#goodsname").removeAttr("readonly");
+                        $("#goodsname").removeAttr("style");
+                        $("#goodsprice").removeAttr("readonly");
+                        $("#goodsprice").removeAttr("style");
+                        $("#goodscount").removeAttr("readonly");
+                        $("#goodscount").removeAttr("style");
+                        $("#billstatus").removeAttr("disabled");
+                        $("#billstatus").removeAttr("style");
+                    }
                 }
             )
             return false;
@@ -99,7 +134,7 @@
     <table id="updateTable">
         <tr>
             <th style="width:200px;">商品编号</th>
-            <th style="width:200px;"><input type="text" name="id" id="id"></th>
+            <th style="width:200px;"><input type="text" name="id" id="id" readonly="readonly" style="background-color:#cccccc;"></th>
         </tr>
         <tr>
             <th style="width:200px;">商品名称</th>
