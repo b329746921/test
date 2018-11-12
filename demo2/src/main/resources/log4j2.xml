@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration status="INFO">
+    <!-- 自定义日志级别 -->
+    <!-- PERFORMANCE 用于记录接口调用耗时-->
+    <CustomLevels>
+        <CustomLevel name="PERFORMANCE" intLevel="50"/>
+        <CustomLevel name="MONOGO_CACHE_PERFORMANCE" intLevel="30"/>
+    </CustomLevels>
+
+    <!--先定义所有的appender-->
+    <appenders>
+        <!--这个输出控制台的配置-->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!--这个都知道是输出日志的格式-->
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36} - %msg%xEx%n"/>
+        </Console>
+
+        <RollingFile name="error_log" fileName="${log.path}/server-error.log"
+                     filePattern="${log.path}/server-error-%d{yyyy-MM-dd}.log">
+            <Filters>
+                <ThresholdFilter level="OFF" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="ERROR" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d{MM-dd HH:mm:ss SSS} %-5p] [%t] %c - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="info_log" fileName="${log.path}/server-info.log"
+                     filePattern="${log.path}/server-info-%d{yyyy-MM-dd}.log">
+            <Filters>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d{MM-dd HH:mm:ss SSS} %-5p] [%t] %c - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="bill_appender" fileName="${log.path}/bill/server-bill.log"
+                     filePattern="${log.path}/bill/server-bill-%d{yyyy-MM-dd}.log">
+            <Filters>
+                <ThresholdFilter level="OFF" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="FATAL" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="ERROR" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="WARN" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="INFO" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="%d{YYYY-MM-dd HH:mm:ss SSS}%m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="performance_appender" fileName="${log.path}/performance-info.log"
+                     filePattern="${log.path}/performance-info-%d{yyyy-MM-dd}.log">
+            <Filters>
+                <ThresholdFilter level="PERFORMANCE" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d{MM-dd HH:mm:ss SSS} %-5p] [%t] %c - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="mongoCache_performance_info" fileName="${log.path}/mongoCache-performance-info.log"
+                     filePattern="${log.path}/mongoCache-performance-info-%d{yyyy-MM-dd}.log">
+            <Filters>
+                <ThresholdFilter level="MONOGO_CACHE_PERFORMANCE" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
+            <PatternLayout pattern="[%d{MM-dd HH:mm:ss SSS} %-5p] [%t] %c - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="default_log" fileName="${log.path}/default.log"
+                     filePattern="/opt/log/server-provider/log/default-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="[%d{MM-dd HH:mm:ss SSS} %-5p] [%t] %c - %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+    </appenders>
+    <!--然后定义logger，只有定义了logger并引入的appender，appender才会生效-->
+    <loggers>
+        <logger name="default_log" level="INFO" additivity="false">
+            <appender-ref ref="default_log"/>
+        </logger>
+        <logger name="info_log" level="INFO" additivity="false">
+            <appender-ref ref="info_log"/>
+        </logger>
+        <logger name="performance_log" level="PERFORMANCE" additivity="false">
+            <appender-ref ref="performance_appender"/>
+        </logger>
+        <logger name="mongoCache_performance_log" level="MONOGO_CACHE_PERFORMANCE" additivity="false">
+            <appender-ref ref="mongoCache_performance_info"/>
+        </logger>
+        <logger name="bill_log" level="INFO" additivity="false">
+            <appender-ref ref="bill_appender"/>
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="info_log"/>
+            <appender-ref ref="error_log"/>
+            <appender-ref ref="performance_appender"/>
+            <appender-ref ref="mongoCache_performance_info"/>
+        </root>
+    </loggers>
+</configuration>
