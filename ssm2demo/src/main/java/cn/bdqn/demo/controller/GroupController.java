@@ -4,6 +4,7 @@ import cn.bdqn.demo.common.CommonResp;
 import cn.bdqn.demo.pojo.TGroupBase;
 import cn.bdqn.demo.service.GroupService;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class GroupController {
     private GroupService groupService;
 
     @RequestMapping(value = "/groupBase", method = RequestMethod.POST)
-    public CommonResp groupBase(TGroupBase tGroupBase){
+    public CommonResp groupBase(TGroupBase tGroupBase, /*解决提交表单erorr*/BindingResult bindingResult){
         return groupService.groupBase(tGroupBase);
     }
 
