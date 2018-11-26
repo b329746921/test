@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.EmployeeMapper">
+  <resultMap id="BaseResultMap" type="com.demo.pojo.Employee">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="employee_no" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="employee_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="job_id" javaType="java.lang.Long" jdbcType="BIGINT" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, employee_no, employee_name, job_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_employee
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="selectList" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_employee
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_employee
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.demo.pojo.Employee">
+    insert into t_employee (id, employee_no, employee_name, 
+      job_id)
+    values (#{id,jdbcType=BIGINT}, #{employeeNo,jdbcType=BIGINT}, #{employeeName,jdbcType=VARCHAR},
+      #{jobId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.demo.pojo.Employee">
+    insert into t_employee
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="employeeNo != null">
+        employee_no,
+      </if>
+      <if test="employeeName != null">
+        employee_name,
+      </if>
+      <if test="jobId != null">
+        job_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="employeeNo != null">
+        #{employeeNo,jdbcType=BIGINT},
+      </if>
+      <if test="employeeName != null">
+        #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobId != null">
+        #{jobId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.demo.pojo.Employee">
+    update t_employee
+    <set>
+      <if test="employeeNo != null">
+        employee_no = #{employeeNo,jdbcType=BIGINT},
+      </if>
+      <if test="employeeName != null">
+        employee_name = #{employeeName,jdbcType=VARCHAR},
+      </if>
+      <if test="jobId != null">
+        job_id = #{jobId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.demo.pojo.Employee">
+    update t_employee
+    set employee_no = #{employeeNo,jdbcType=BIGINT},
+      employee_name = #{employeeName,jdbcType=VARCHAR},
+      job_id = #{jobId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

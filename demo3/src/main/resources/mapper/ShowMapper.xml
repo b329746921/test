@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.ShowMapper">
+    <resultMap id="BaseResultMap" type="com.demo.pojo.Show">
+        <constructor>
+            <arg column="project_no" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="project_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="employee_no" javaType="java.lang.Long" jdbcType="BIGINT" />
+            <arg column="employee_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="job_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+            <arg column="salary" javaType="java.lang.Double" jdbcType="DOUBLE" />
+            <arg column="work_hour" javaType="java.lang.Long" jdbcType="BIGINT" />
+        </constructor>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, project_no, project_name
+  </sql>
+    <select id="getShowList" resultMap="BaseResultMap">
+        select t_project.project_no, t_project.project_name, t_employee.employee_no, t_employee.employee_name, t_job.job_name, t_job.salary, t_details.work_hour
+from t_project, t_job, t_employee, t_details
+WHERE t_job.id = t_employee.job_id
+AND t_details.project_id = t_project.id
+AND t_details.person_id = t_employee.id
+    </select>
+</mapper>

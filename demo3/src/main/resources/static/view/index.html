@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <script src="/util/jquery.js"></script>
+    <script>
+        function addDetails(){
+            $.post(
+                "details/add",
+                $("#addDetailsForm").serialize(),
+                function (result) {
+                    if (result) {
+                        alert("添加成功");
+                    } else {
+                        alert("不知道咋了，添加失败")
+                    }
+                }
+            )
+        }
+
+        function modDetails(target){
+            let children = target.parent().parent().children()
+            let projectId = children.eq(1);
+            let personId = children.eq(3);
+            alert(children.html())
+            for(let i in children){
+                alert(i.html())
+            }
+
+        }
+
+        function remDetails(){
+        }
+
+        $(function () {
+            $.get(
+                "/list",
+                function (result) {
+                    for (var i in result) {
+                        $("#show_table").append("<tr>" +
+                            "<th>"+result[i].projectNo+"</th>" +
+                            "<th>"+result[i].projectName+"</th>" +
+                            "<th>"+result[i].employeeNo+"</th>" +
+                            "<th>"+result[i].employeeName+"</th>" +
+                            "<th>"+result[i].jobName+"</th>" +
+                            "<th>"+result[i].salary+"</th>" +
+                            "<th>"+result[i].workHour+"</th>" +
+                            "<th><a onclick='modDetails($(this))'>修改</a> <a onclick='remDetails()'>删除</a></th>" +
+                            "</tr>")
+                    }
+                }
+            )
+
+            $.get(
+                "/project/list",
+                function (result) {
+                    for (var i in result) {
+                        $("#project_id").append("<option value='"+result[i].id+"'>"+result[i].projectName+"</option>")
+                    }
+                }
+            )
+
+            $.get(
+                "/employee/list",
+                function (result) {
+                    for (var i in result) {
+                        $("#employee_id").append("<option value='"+result[i].id+"'>"+result[i].employeeName+"</option>")
+                    }
+                }
+            )
+        })
+    </script>
+</head>
+<body>
+<form id="addDetailsForm">
+    选择项目:<select id="project_id" name="projectId"></select>
+    选择员工:<select id="employee_id" name="personId"></select>
+    工时:<input name="workHour" type="text">
+    <button onclick="addDetails()">添加</button>
+</form>
+<br/>
+<table id="show_table">
+    <tr>
+        <th>工程号</th>
+        <th>工程名称</th>
+        <th>职工号</th>
+        <th>姓名</th>
+        <th>职务</th>
+        <th>小时工资率</th>
+        <th>工时</th>
+        <th>操作</th>
+    </tr>
+</table>
+</body>
+</html>
