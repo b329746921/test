@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>employee</title>
+    <script src="/util/jquery.js"></script>
+    <script>
+        function queryEmployee(id) {
+            $.get(
+                "/employee/get",
+                {"id":id},
+                function (result) {
+                    $("#employee_form").append("职工号:<input type='text' name=''></input> " +
+                        "姓名:<input type='text' name=''></input> " +
+                        "职务:<select id='job' name=''><option value=''></option></select>" +
+                        "<button onclick='modEmployee()'>确认修改</button>");
+                }
+            )
+
+            $.get(
+                "/job/list",
+                function (result) {
+                    $("#job").append("<option value=''></option>")
+                }
+            )
+        }
+
+        function modEmployee() {
+            $.post(
+                "/employee/mod",
+                $("#Employee_form").serialize(),
+                function (result) {
+
+                }
+            )
+        }
+
+        function remEmployee(id) {
+            $.post(
+                "/employee/rem",
+                {"id":id},
+                function (result) {
+
+                }
+            )
+        }
+        $(function () {
+            $.get(
+                "/employee/list",
+                function (result) {
+                    $("#employee_table").append("<tr>" +
+                        "<th>"+result[i].employeeNo+"</th>" +
+                        "<th>"+result[i].employeeName+"</th>" +
+                        "<th>"+result[i].jobName+"</th>" +
+                        "<th><a onclick='queryEmployee()'>修改</a> <a onclick='remEmployee()'>删除</a></th>" +
+                        "</tr>")
+                }
+            )
+        })
+    </script>
+</head>
+<body>
+<table id="employee_table">
+    <tr>
+        <th>职工号</th>
+        <th>姓名</th>
+        <th>职务</th>
+        <th>操作</th>
+    </tr>
+</table>
+<form id="employee_form">
+
+</form>
+</body>
+</html>

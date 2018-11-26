@@ -2,6 +2,8 @@ package com.demo.mapper;
 
 import com.demo.pojo.Job;
 
+import java.util.List;
+
 public interface JobMapper {
     int deleteByPrimaryKey(Long id);
 
@@ -14,4 +16,6 @@ public interface JobMapper {
     int updateByPrimaryKeySelective(Job record);
 
     int updateByPrimaryKey(Job record);
+
+    List<Job> selectList();
 }

@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>demo</title>
+    <title>inedx</title>
     <script src="/util/jquery.js"></script>
     <script>
         function addDetails(){
             $.post(
-                "details/add",
+                "/details/add",
                 $("#addDetailsForm").serialize(),
                 function (result) {
                     if (result) {
@@ -17,20 +17,6 @@
                     }
                 }
             )
-        }
-
-        function modDetails(target){
-            let children = target.parent().parent().children()
-            let projectId = children.eq(1);
-            let personId = children.eq(3);
-            alert(children.html())
-            for(let i in children){
-                alert(i.html())
-            }
-
-        }
-
-        function remDetails(){
         }
 
         $(function () {
@@ -46,7 +32,6 @@
                             "<th>"+result[i].jobName+"</th>" +
                             "<th>"+result[i].salary+"</th>" +
                             "<th>"+result[i].workHour+"</th>" +
-                            "<th><a onclick='modDetails($(this))'>修改</a> <a onclick='remDetails()'>删除</a></th>" +
                             "</tr>")
                     }
                 }
@@ -89,7 +74,6 @@
         <th>职务</th>
         <th>小时工资率</th>
         <th>工时</th>
-        <th>操作</th>
     </tr>
 </table>
 </body>

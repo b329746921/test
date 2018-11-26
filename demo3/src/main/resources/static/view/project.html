@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>project</title>
+    <script src="/util/jquery.js"></script>
+    <script>
+        function queryProject(id) {
+            $.get(
+                "/project/get",
+                {"id":id},
+                function (result) {
+
+                }
+            )
+        }
+
+        function modProject() {
+            $.post(
+                "/project/mod",
+                $("#project_form").serialize(),
+                function (result) {
+
+                }
+            )
+        }
+
+        function remProject(id) {
+            $.post(
+                "/project/rem",
+                {"id":id},
+                function (result) {
+
+                }
+            )
+        }
+
+        $(function () {
+          $.get(
+              "/project/list",
+              function (result) {
+                  for (var i in result) {
+                      $("#project_table").append("<tr>" +
+                          "<th>"+result[i].projectNo+"</th>" +
+                          "<th>"+result[i].projectName+"</th>" +
+                          "<th><a onclick='queryProject()'>修改</a> <a onclick='remProject()'>删除</a></th>" +
+                          "</tr>")
+                  }
+              }
+          )
+        })
+    </script>
+</head>
+<body>
+<table id="project_table">
+    <tr>
+        <th>工程号</th>
+        <th>工程名称</th>
+        <th>操作</th>
+    </tr>
+</table>
+<form id="project_form">
+
+</form>
+</body>
+</html>

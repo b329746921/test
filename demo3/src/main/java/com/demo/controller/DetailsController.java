@@ -16,17 +16,17 @@ public class DetailsController {
     @Resource
     private DetailsService detailsService;
 
-    @PostMapping("details/add")
+    @PostMapping("/details/add")
     public boolean addDetails(Details details){
         return detailsService.addDetails(details);
     }
 
-    @PostMapping("details/mod")
+    @PostMapping("/details/mod")
     public boolean modDetails(Details details){
         return detailsService.modDetails(details);
     }
 
-    @PostMapping("details/rem")
+    @PostMapping("/details/rem")
     public boolean remDetails(Details details){
         return detailsService.remDetails(details);
     }
