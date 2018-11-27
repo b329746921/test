@@ -21,4 +21,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getEmployeeList(){
         return employeeMapper.selectList();
     }
+
+    @Override
+    public Employee getEmployee(Long id){
+        return employeeMapper.selectByPrimaryKey(id);
+    }
 }

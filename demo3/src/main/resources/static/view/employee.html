@@ -8,17 +8,24 @@
         function queryEmployee(id) {
             $.get(
                 "/job/list",
-                flase,
-
+                false,
+                function (result) {
+                    $("#employee_form").append("职工号:<input type='text' id='employeeNo' name='employeeNo'></input> " +
+                        "姓名:<input type='text' id='employeeName' name='employeeName'></input> " +
+                        "职务:<select id='jobId' name='jobId'></select>" +
+                        "<button onclick='modEmployee()'>确认修改</button>");
+                    for(let i in result){
+                        $("#jobId").append("<option value='"+result[i].id+"'>"+result[i].jobName+"</option>")
+                    }
+                }
             )
             $.get(
                 "/employee/get",
                 {"id":id},
                 function (result) {
-                    $("#employee_form").append("职工号:<input type='text' name=''></input> " +
-                        "姓名:<input type='text' name=''></input> " +
-                        "职务:<select id='job' name=''><option value=''></option></select>" +
-                        "<button onclick='modEmployee()'>确认修改</button>");
+                    $("#employeeNo").val(result.employeeNo)
+                    $("#employeeName").val(result.employeeName)
+                    $("#jobId").val(result.jobId)
                 }
             )
 
