@@ -23,7 +23,7 @@
             $.get(
                 "/list",
                 function (result) {
-                    for (var i in result) {
+                    for (let i in result) {
                         $("#show_table").append("<tr>" +
                             "<th>"+result[i].projectNo+"</th>" +
                             "<th>"+result[i].projectName+"</th>" +
@@ -58,6 +58,7 @@
     </script>
 </head>
 <body>
+<a href="/project">项目管理</a> <a href="/employee">员工管理</a>
 <form id="addDetailsForm">
     选择项目:<select id="project_id" name="projectId"></select>
     选择员工:<select id="employee_id" name="personId"></select>

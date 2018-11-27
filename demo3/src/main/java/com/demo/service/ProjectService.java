@@ -10,4 +10,12 @@ import java.util.List;
  **/
 public interface ProjectService {
     List<Project> getProjectList();
+
+    Project getProject(Long id);
+
+    boolean addProject(Project project);
+
+    boolean modProject(Project project);
+
+    boolean remProject(Long id);
 }

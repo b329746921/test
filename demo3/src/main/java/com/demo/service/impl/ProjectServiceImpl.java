@@ -21,4 +21,33 @@ public class ProjectServiceImpl implements ProjectService {
     public List<Project> getProjectList(){
         return projectMapper.selectList();
     }
+
+    @Override
+    public Project getProject(Long id){
+        return projectMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public boolean addProject(Project project){
+        int i = projectMapper.insertSelective(project);
+        if (i != 1)
+            return false;
+        return true;
+    }
+
+    @Override
+    public boolean modProject(Project project){
+        int i = projectMapper.updateByPrimaryKeySelective(project);
+        if (i != 1)
+            return false;
+        return true;
+    }
+
+    @Override
+    public boolean remProject(Long id){
+        int i = projectMapper.deleteByPrimaryKey(id);
+        if (i != 1)
+            return false;
+        return true;
+    }
 }

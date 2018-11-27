@@ -7,6 +7,11 @@
     <script>
         function queryEmployee(id) {
             $.get(
+                "/job/list",
+                flase,
+
+            )
+            $.get(
                 "/employee/get",
                 {"id":id},
                 function (result) {
@@ -48,18 +53,21 @@
             $.get(
                 "/employee/list",
                 function (result) {
-                    $("#employee_table").append("<tr>" +
-                        "<th>"+result[i].employeeNo+"</th>" +
-                        "<th>"+result[i].employeeName+"</th>" +
-                        "<th>"+result[i].jobName+"</th>" +
-                        "<th><a onclick='queryEmployee()'>修改</a> <a onclick='remEmployee()'>删除</a></th>" +
-                        "</tr>")
+                    for(let i in result){
+                        $("#employee_table").append("<tr>" +
+                            "<th>"+result[i].employeeNo+"</th>" +
+                            "<th>"+result[i].employeeName+"</th>" +
+                            "<th>"+result[i].jobId+"</th>" +
+                            "<th><a href='javascript:void(0);' onclick='queryEmployee()'>修改</a> <a href='javascript:void(0);' onclick='remEmployee()'>删除</a></th>" +
+                            "</tr>")
+                    }
                 }
             )
         })
     </script>
 </head>
 <body>
+<a href="/">返回</a>
 <table id="employee_table">
     <tr>
         <th>职工号</th>

@@ -11,12 +11,22 @@ import javax.annotation.Resource;
  * @date 2018/11/26
  **/
 @Controller
-public class IndexController {
+public class PageController {
     @Resource
     private ShowService showService;
 
     @GetMapping("/")
     public String index(){
         return "index";
+    }
+
+    @GetMapping("/project")
+    public String toProject(){
+        return "project";
+    }
+
+    @GetMapping("/employee")
+    public String toEmployee(){
+        return "employee";
     }
 }

@@ -5,12 +5,48 @@
     <title>project</title>
     <script src="/util/jquery.js"></script>
     <script>
+        function queryList() {
+            $("#project_table").empty()
+            $.get(
+                "/project/list",
+                function (result) {
+                    for (let i in result) {
+                        $("#project_table").append("<tr>" +
+                            "<th>"+result[i].projectNo+"</th>" +
+                            "<th>"+result[i].projectName+"</th>" +
+                            "<th><a href='javascript:void(0);' onclick='queryProject("+result[i].id+")'>修改</a> <a href='javascript:void(0);' onclick='remProject("+result[i].id+")'>删除</a></th>" +
+                            "</tr>")
+                    }
+                }
+            )
+        }
+
+        function addProject(id) {
+            $.post(
+                "/project/add",
+                $("#project_add_form").serialize(),
+                function (result) {
+                    if (result) {
+                        alert("添加成功");
+                        queryList()
+                    } else {
+                        alert("添加失败")
+                    }
+                }
+            )
+            return false;
+        }
+
         function queryProject(id) {
+            $("#project_form").empty()
             $.get(
                 "/project/get",
                 {"id":id},
                 function (result) {
-
+                    $("#project_form").append("<input type='hidden' name='id' value='"+result.id+"'>" +
+                        "工程号:<input type='text' name='projectNo' value='"+result.projectNo+"'><br/>" +
+                        "工程名称:<input type='text' name='projectName' value='"+result.projectName+"'><br/>" +
+                        "<button onclick='return modProject()'>确认修改</button>")
                 }
             )
         }
@@ -20,9 +56,16 @@
                 "/project/mod",
                 $("#project_form").serialize(),
                 function (result) {
-
+                    if (result) {
+                        alert("修改成功")
+                        queryList()
+                        $("#project_form").empty()
+                    } else {
+                        alert("修改失败")
+                    }
                 }
             )
+            return false
         }
 
         function remProject(id) {
@@ -30,28 +73,28 @@
                 "/project/rem",
                 {"id":id},
                 function (result) {
-
+                    if (result) {
+                        alert("删除成功");
+                        queryList()
+                    } else {
+                        alert("删除失败")
+                    }
                 }
             )
         }
 
         $(function () {
-          $.get(
-              "/project/list",
-              function (result) {
-                  for (var i in result) {
-                      $("#project_table").append("<tr>" +
-                          "<th>"+result[i].projectNo+"</th>" +
-                          "<th>"+result[i].projectName+"</th>" +
-                          "<th><a onclick='queryProject()'>修改</a> <a onclick='remProject()'>删除</a></th>" +
-                          "</tr>")
-                  }
-              }
-          )
+            queryList()
         })
     </script>
 </head>
 <body>
+<a href="/">返回</a><br/>
+<form id="project_add_form">
+    工程号:<input type="text" name="projectNo"></input>
+    工程名称<input type="text" name="projectName"></input>
+    <button onclick="return addProject()">添加</button>
+</form>
 <table id="project_table">
     <tr>
         <th>工程号</th>
