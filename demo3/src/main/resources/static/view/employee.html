@@ -5,12 +5,30 @@
     <title>employee</title>
     <script src="/util/jquery.js"></script>
     <script>
-        function queryEmployee(id) {
+        function queryList() {
             $.get(
-                "/job/list",
-                false,
+                "/employee/list",
                 function (result) {
-                    $("#employee_form").append("职工号:<input type='text' id='employeeNo' name='employeeNo'></input> " +
+                    for(let i in result){
+                        $("#employee_table").append("<tr>" +
+                            "<th>"+result[i].employeeNo+"</th>" +
+                            "<th>"+result[i].employeeName+"</th>" +
+                            "<th>"+result[i].jobId+"</th>" +
+                            "<th><a href='javascript:void(0);' onclick='queryEmployee("+result[i].id+")'>修改</a> <a href='javascript:void(0);' onclick='remEmployee()'>删除</a></th>" +
+                            "</tr>")
+                    }
+                }
+            )
+        }
+
+        function queryEmployee(id) {
+            $("#employee_form").empty()
+            $.get({
+                url:"/job/list",
+                async:false,
+                success:function (result) {
+                    $("#employee_form").append("<input type='hidden' id='id' name='id'>" +
+                        "职工号:<input type='text' id='employeeNo' name='employeeNo'></input> " +
                         "姓名:<input type='text' id='employeeName' name='employeeName'></input> " +
                         "职务:<select id='jobId' name='jobId'></select>" +
                         "<button onclick='modEmployee()'>确认修改</button>");
@@ -18,31 +36,32 @@
                         $("#jobId").append("<option value='"+result[i].id+"'>"+result[i].jobName+"</option>")
                     }
                 }
-            )
-            $.get(
-                "/employee/get",
-                {"id":id},
-                function (result) {
+            })
+            $.get({
+                url:"/employee/get",
+                data:{"id":id},
+                async:false,
+                success:function (result) {
+                    $("#id").val(result.id)
                     $("#employeeNo").val(result.employeeNo)
                     $("#employeeName").val(result.employeeName)
                     $("#jobId").val(result.jobId)
                 }
-            )
-
-            $.get(
-                "/job/list",
-                function (result) {
-                    $("#job").append("<option value=''></option>")
-                }
-            )
+            })
         }
 
         function modEmployee() {
             $.post(
                 "/employee/mod",
-                $("#Employee_form").serialize(),
+                $("#employee_form").serialize(),
                 function (result) {
-
+                    if (result) {
+                        alert("修改成功")
+                        queryList()
+                        $("#employee_form").empty()
+                    } else {
+                        alert("修改失败")
+                    }
                 }
             )
         }
@@ -52,24 +71,18 @@
                 "/employee/rem",
                 {"id":id},
                 function (result) {
-
+                    if (result) {
+                        alert("删除成功")
+                        queryList()
+                        $("#employee_form").empty()
+                    } else {
+                        alert("删除失败")
+                    }
                 }
             )
         }
         $(function () {
-            $.get(
-                "/employee/list",
-                function (result) {
-                    for(let i in result){
-                        $("#employee_table").append("<tr>" +
-                            "<th>"+result[i].employeeNo+"</th>" +
-                            "<th>"+result[i].employeeName+"</th>" +
-                            "<th>"+result[i].jobId+"</th>" +
-                            "<th><a href='javascript:void(0);' onclick='queryEmployee()'>修改</a> <a href='javascript:void(0);' onclick='remEmployee()'>删除</a></th>" +
-                            "</tr>")
-                    }
-                }
-            )
+            queryList()
         })
     </script>
 </head>
